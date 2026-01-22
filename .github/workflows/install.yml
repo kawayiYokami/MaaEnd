@@ -9,7 +9,7 @@ on:
     paths:
       - ".github/workflows/install.yml"
       - "assets/**"
-      - "src-agent/**"
+      - "agent/**"
       - "tools/**"
 
   pull_request:
@@ -18,7 +18,7 @@ on:
     paths:
       - ".github/workflows/install.yml"
       - "assets/**"
-      - "src-agent/**"
+      - "agent/**"
       - "tools/**"
 
   workflow_dispatch:

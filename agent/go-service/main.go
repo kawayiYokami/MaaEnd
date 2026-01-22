@@ -18,7 +18,7 @@ func main() {
 	log.Info().Str("version", Version).Msg("MaaEnd Agent Service")
 
 	if len(os.Args) < 2 {
-		log.Fatal().Msg("Usage: service <identifier>")
+		log.Fatal().Msg("Usage: go-service <identifier>")
 	}
 
 	identifier := os.Args[1]

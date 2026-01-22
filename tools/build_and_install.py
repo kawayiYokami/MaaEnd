@@ -119,9 +119,9 @@ def build_go_agent(
     version: str | None = None,
 ) -> bool:
     """构建 Go Agent"""
-    service_dir = root_dir / "src-agent" / "service"
-    if not service_dir.exists():
-        print(f"  [ERROR] Go 源码目录不存在: {service_dir}")
+    go_service_dir = root_dir / "agent" / "go-service"
+    if not go_service_dir.exists():
+        print(f"  [ERROR] Go 源码目录不存在: {go_service_dir}")
         return False
 
     # 检测或使用指定的系统和架构
@@ -147,7 +147,7 @@ def build_go_agent(
 
     agent_dir = install_dir / "agent"
     agent_dir.mkdir(parents=True, exist_ok=True)
-    output_path = agent_dir / f"service{ext}"
+    output_path = agent_dir / f"go-service{ext}"
 
     print(f"  目标平台: {goos}/{goarch}")
     print(f"  输出路径: {output_path}")
@@ -157,7 +157,7 @@ def build_go_agent(
     # go mod tidy
     result = subprocess.run(
         ["go", "mod", "tidy"],
-        cwd=service_dir,
+        cwd=go_service_dir,
         capture_output=True,
         text=True,
         env=env,
@@ -173,7 +173,7 @@ def build_go_agent(
 
     result = subprocess.run(
         ["go", "build", f"-ldflags={ldflags}", "-o", str(output_path), "."],
-        cwd=service_dir,
+        cwd=go_service_dir,
         capture_output=True,
         text=True,
         env=env,

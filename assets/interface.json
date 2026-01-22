@@ -50,7 +50,7 @@
         }
     ],
     "agent": {
-        "child_exec": "agent/service",
+        "child_exec": "agent/go-service",
         "child_args": []
     },
     "task": [

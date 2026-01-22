@@ -1,4 +1,4 @@
-module github.com/MaaXYZ/MaaEnd/src-agent/service
+module github.com/MaaXYZ/MaaEnd/agent/go-service
 
 go 1.25.6
 

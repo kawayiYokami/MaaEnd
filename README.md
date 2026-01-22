@@ -39,7 +39,7 @@ Powered by [MaaFramework](https://github.com/MaaXYZ/MaaFramework) & [MXU](https:
     git submodule update --init --recursive
     ```
 
-2. 编译 GoAgent、配置路径
+2. 编译 go-service 、配置路径
 
     ```bash
     python tools/build_and_install.py
