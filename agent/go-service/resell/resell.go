@@ -32,7 +32,7 @@ func (a *ResellInitAction) Run(ctx *maa.Context, arg *maa.CustomActionArg) bool 
 		log.Error().Err(err).Msg("[Resell]反序列化失败")
 		return false
 	}
-	
+
 	// Parse MinimumProfit (support both string and int)
 	var MinimumProfit int
 	switch v := params.MinimumProfit.(type) {
@@ -51,7 +51,7 @@ func (a *ResellInitAction) Run(ctx *maa.Context, arg *maa.CustomActionArg) bool 
 	}
 
 	fmt.Printf("MinimumProfit: %d\n", MinimumProfit)
-	
+
 	// Get controller
 	controller := ctx.GetTasker().GetController()
 	if controller == nil {
@@ -63,7 +63,7 @@ func (a *ResellInitAction) Run(ctx *maa.Context, arg *maa.CustomActionArg) bool 
 	log.Info().Msg("Checking quota overflow status...")
 	time.Sleep(500 * time.Millisecond)
 	controller.PostScreencap().Wait()
-	
+
 	// OCR and parse quota from two regions
 	x, y, _, b := ocrAndParseQuota(ctx, controller)
 	if x >= 0 && y > 0 && b >= 0 {
@@ -210,7 +210,7 @@ func (a *ResellInitAction) Run(ctx *maa.Context, arg *maa.CustomActionArg) bool 
 			break
 		}
 	}
-	
+
 	if maxProfitIdx < 0 {
 		log.Error().Msg("未找到最高利润商品")
 		return false
@@ -222,28 +222,28 @@ func (a *ResellInitAction) Run(ctx *maa.Context, arg *maa.CustomActionArg) bool 
 	// Check if we should purchase
 	if overflowAmount > 0 {
 		// Quota overflow detected, show reminder and recommend purchase
-		log.Info().Msgf("配额溢出：建议购买%d件商品，推荐第%d行第%d列（利润：%d）", 
+		log.Info().Msgf("配额溢出：建议购买%d件商品，推荐第%d行第%d列（利润：%d）",
 			overflowAmount, maxRecord.Row, maxRecord.Col, maxRecord.Profit)
-		
+
 		// Show message with focus
-		message := fmt.Sprintf("⚠️ 配额溢出提醒\n剩余配额明天将超出上限，建议购买%d件商品\n推荐购买: 第%d行第%d列 (最高利润: %d)", 
+		message := fmt.Sprintf("⚠️ 配额溢出提醒\n剩余配额明天将超出上限，建议购买%d件商品\n推荐购买: 第%d行第%d列 (最高利润: %d)",
 			overflowAmount, maxRecord.Row, maxRecord.Col, maxRecord.Profit)
 		ResellShowMessage(ctx, message)
 		return true
 	} else if maxRecord.Profit >= MinimumProfit {
 		// Normal mode: purchase if meets minimum profit
-		log.Info().Msgf("利润达标，准备购买第%d行第%d列商品（利润：%d）", 
+		log.Info().Msgf("利润达标，准备购买第%d行第%d列商品（利润：%d）",
 			maxRecord.Row, maxRecord.Col, maxRecord.Profit)
 		taskName := fmt.Sprintf("ResellSelectProductRow%dCol%d", maxRecord.Row, maxRecord.Col)
 		ctx.OverrideNext(arg.CurrentTaskName, []string{taskName})
 		return true
 	} else {
 		// No profitable item, show recommendation
-		log.Info().Msgf("没有达到最低利润%d的商品，推荐第%d行第%d列（利润：%d）", 
+		log.Info().Msgf("没有达到最低利润%d的商品，推荐第%d行第%d列（利润：%d）",
 			MinimumProfit, maxRecord.Row, maxRecord.Col, maxRecord.Profit)
-		
+
 		// Show message with focus
-		message := fmt.Sprintf("💡 没有达到最低利润的商品，建议把配额留至明天\n推荐购买: 第%d行第%d列 (利润: %d)", 
+		message := fmt.Sprintf("💡 没有达到最低利润的商品，建议把配额留至明天\n推荐购买: 第%d行第%d列 (利润: %d)",
 			maxRecord.Row, maxRecord.Col, maxRecord.Profit)
 		ResellShowMessage(ctx, message)
 		return true
@@ -430,13 +430,13 @@ func ocrAndParseQuota(ctx *maa.Context, controller *maa.Controller) (x int, y in
 	y = -1
 	hoursLater = -1
 	b = -1
-	
+
 	img := controller.CacheImage()
 	if img == nil {
 		log.Error().Msg("Failed to get screenshot for quota OCR")
 		return x, y, hoursLater, b
 	}
-	
+
 	// OCR region 1: [180, 135, 75, 30] to get "x/y"
 	ocrParam1 := &maa.NodeOCRParam{
 		ROI:       maa.NewTargetRect(maa.Rect{180, 135, 75, 30}),
@@ -444,7 +444,7 @@ func ocrAndParseQuota(ctx *maa.Context, controller *maa.Controller) (x int, y in
 		Expected:  []string{".*"},
 		Threshold: 0.3,
 	}
-	
+
 	detail1 := ctx.RunRecognitionDirect(maa.NodeRecognitionTypeOCR, ocrParam1, img)
 	if detail1 != nil && detail1.DetailJson != "" {
 		var rawResults1 map[string]interface{}
@@ -466,7 +466,7 @@ func ocrAndParseQuota(ctx *maa.Context, controller *maa.Controller) (x int, y in
 			}
 		}
 	}
-	
+
 	// OCR region 2: [250, 130, 110, 30] to get "a小时后+b" or "a分钟后+b"
 	ocrParam2 := &maa.NodeOCRParam{
 		ROI:       maa.NewTargetRect(maa.Rect{250, 130, 110, 30}),
@@ -474,7 +474,7 @@ func ocrAndParseQuota(ctx *maa.Context, controller *maa.Controller) (x int, y in
 		Expected:  []string{".*"},
 		Threshold: 0.3,
 	}
-	
+
 	detail2 := ctx.RunRecognitionDirect(maa.NodeRecognitionTypeOCR, ocrParam2, img)
 	if detail2 != nil && detail2.DetailJson != "" {
 		var rawResults2 map[string]interface{}
@@ -512,7 +512,7 @@ func ocrAndParseQuota(ctx *maa.Context, controller *maa.Controller) (x int, y in
 			}
 		}
 	}
-	
+
 	return x, y, hoursLater, b
 }
 
