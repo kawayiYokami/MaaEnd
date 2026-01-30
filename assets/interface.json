@@ -321,7 +321,7 @@
                         "HandleTutorialConfirm": {
                             "enabled": true
                         },
-                        "ClickAnywhereToContinue": {
+                        "CheckAnywhere": {
                             "enabled": true
                         },
                         "CheckSpecialInfoPanel": {
@@ -350,7 +350,7 @@
                         "HandleTutorialConfirm": {
                             "enabled": false
                         },
-                        "ClickAnywhereToContinue": {
+                        "CheckAnywhere": {
                             "enabled": false
                         },
                         "CheckSpecialInfoPanel": {
@@ -429,7 +429,7 @@
                 {
                     "name": "Yes",
                     "pipeline_override": {
-                        "ClickAnywhereToContinue": {
+                        "CheckAnywhere": {
                             "enabled": true
                         }
                     }
@@ -437,7 +437,7 @@
                 {
                     "name": "No",
                     "pipeline_override": {
-                        "ClickAnywhereToContinue": {
+                        "CheckAnywhere": {
                             "enabled": false
                         }
                     }
