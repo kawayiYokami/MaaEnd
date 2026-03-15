@@ -52,13 +52,13 @@ func (s *SkillPool) UnmarshalJSON(data []byte) error {
 
 // WeaponOutputEntry - single weapon from weapons_output.json
 type WeaponOutputEntry struct {
-	InternalID  string              `json:"internal_id"`
-	WeaponType  string              `json:"weapon_type"`
-	Rarity      int                 `json:"rarity"`
-	IconPath    string              `json:"icon_path"`
-	Names       map[string]string   `json:"names"`
-	Skills      map[string][]string `json:"skills"`
-	SkillIDs    []string            `json:"skill_ids"` // internal ids, not used for matching
+	InternalID string              `json:"internal_id"`
+	WeaponType string              `json:"weapon_type"`
+	Rarity     int                 `json:"rarity"`
+	IconPath   string              `json:"icon_path"`
+	Names      map[string]string   `json:"names"`
+	Skills     map[string][]string `json:"skills"`
+	SkillIDs   []string            `json:"skill_ids"` // internal ids, not used for matching
 }
 
 // WeaponsOutputRaw - root structure of weapons_output.json: map internal_id -> weapon
