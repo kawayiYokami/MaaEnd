@@ -38,7 +38,7 @@ private:
         int h = 0;
         int infer_margin = 0;
 
-        MEO_JSONIZATION(MEO_OPT(base_class), MEO_OPT(x), MEO_OPT(y), MEO_OPT(w), MEO_OPT(h), MEO_OPT(infer_margin))
+        MEO_JSONIZATION(MEO_OPT base_class, MEO_OPT x, MEO_OPT y, MEO_OPT w, MEO_OPT h, MEO_OPT infer_margin)
     };
 
     std::unique_ptr<Ort::Env> ortEnv;
