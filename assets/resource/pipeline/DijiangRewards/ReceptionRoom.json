@@ -578,13 +578,14 @@
                 "roi": [
                     11,
                     6,
-                    241,
+                    360,
                     51
                 ],
                 "expected": [
                     "赠予自有线索",
                     "贈予自有線索",
                     "Send Local Clues",
+                    "SEND LOCAL CLUES",
                     "譲り渡す"
                 ]
             }
@@ -602,13 +603,14 @@
                 "roi": [
                     11,
                     6,
-                    241,
+                    360,
                     51
                 ],
                 "expected": [
                     "赠予自有线索",
                     "贈予自有線索",
                     "Send Local Clues",
+                    "SEND LOCAL CLUES",
                     "譲り渡す"
                 ]
             }
